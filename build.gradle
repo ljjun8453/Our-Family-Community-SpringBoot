@@ -1,0 +1,72 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.community'
+version = '0.0.1-SNAPSHOT'
+description = 'Our Family Community project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // 쿼리DSL 적용
+    implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+
+    // 타임리프 및 타임리프 레이아웃 적용
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    // 데브툴즈 적용
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // 스프링 시큐리티 적용
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // 회원가입 페이지에서 서버로 넘어오는 값의 유효성 검사
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // 스프링 시큐리티 - 타임리프 연동
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    /*
+    - modelmapper 라이브러리 의존성 추가
+    modelMapper.map(source, destinationType) 메서드
+    source: 변환할 원본 객체
+    destinationType: 변환 대상 클래스 타입
+    */
+    implementation 'org.modelmapper:modelmapper:3.2.0'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

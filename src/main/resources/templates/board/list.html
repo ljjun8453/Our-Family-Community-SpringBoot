@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/list.css}" />
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/list.js}" defer></script>
+</th:block>
+
+<div layout:fragment="content">
+  <main>
+    <!-- 자유게시판 -->
+    <section class="board-section">
+      <div class="section-header">
+          <h2 th:switch="${boardType}">
+              <span th:case="${T(com.community.constant.BoardType).NOTICE}">📢 공지사항</span>
+              <span th:case="${T(com.community.constant.BoardType).FREE}">💬 자유게시판</span>
+              <span th:case="${T(com.community.constant.BoardType).ALBUM}">📸 가족 앨범</span>
+              <span th:case="${T(com.community.constant.BoardType).EVENT}">🎉 이벤트 소식</span>
+              <span th:case="*">📌 게시판</span>
+          </h2>
+        <div class="section-header2">
+            <a th:href="@{/home}" class="btn btn-detail">홈 🏠</a>
+            <a th:href="@{/board/{boardType}/new(boardType=${boardType})}" class="btn btn-write">글쓰기 ✍️</a>
+        </div>
+      </div>
+      <!-- Thymeleaf 문법 반복문 -->
+      <div class="post-list">
+          <div class="post" th:each="post : ${posts}" th:onclick="|location.href='@{/board/{boardType}/{postId}(boardType=${boardType}, postId=${post.id})}'|">
+            <div class="post-title" th:text="${post.title}">제목</div>
+            <div class="post-meta" th:text="${post.createdBy} + ' | ' + ${#temporals.format(post.createTime, 'yyyy-MM-dd')}">작성자 | 2025-08-25</div>
+          </div>
+          <div class="post" th:if="${posts.isEmpty()}">게시글이 없습니다.</div>
+      </div>
+    </section>
+    <!-- 페이지네이션 -->
+    <div class="pagination" th:if="${posts.totalPages > 1}">
+        <a th:if="${!posts.first}" th:href="@{/board/{boardType}(boardType=${boardType}, page=${posts.number - 1})}">«</a>
+        <span th:each="p : ${#numbers.sequence(0, 6)}">
+            <strong th:if="${p == posts.number}" th:text="${p + 1}">1</strong>
+            <a th:if="${p != posts.number}" th:href="@{/board/{boardType}(boardType=${boardType}, page=${p})}" th:text="${p + 1}">1</a>
+        </span>
+        <a th:if="${!posts.last}" th:href="@{/board/{boardType}(boardType=${boardType}, page=${posts.number + 1})}">»</a>
+    </div>
+  </main>
+</div>
+</html>

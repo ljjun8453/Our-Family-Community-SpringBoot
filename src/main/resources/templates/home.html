@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/home.js}" defer></script>
+</th:block>
+
+<div layout:fragment="content">
+  <main>
+    <!-- 공지사항 -->
+    <section class="board-section">
+      <div class="section-header">
+        <h2>📢 공지사항</h2>
+        <div class="section-header2">
+            <a th:href="@{/board/NOTICE/new}" class="btn btn-write">글쓰기 ✍️</a>
+            <a th:href="@{/board/NOTICE}" class="btn btn-detail">더보기 ➕</a>
+        </div>
+      </div>
+      <div class="post-list">
+          <div class="post" th:each="post : ${noticePosts}" th:onclick="|location.href='@{/board/NOTICE/{postId}(postId=${post.id})}'|">
+            <div class="post-title" th:text="${post.title}">제목</div>
+            <div class="post-meta" th:text="${post.createdBy} + ' | ' + ${#temporals.format(post.createTime, 'yyyy-MM-dd')}">작성자 | 2025-08-25</div>
+          </div>
+          <div class="post" th:if="${noticePosts == null or #lists.isEmpty(noticePosts)}">게시글이 없습니다.</div>
+      </div>
+    </section>
+
+    <!-- 자유게시판 -->
+    <section class="board-section">
+      <div class="section-header">
+        <h2>💬 자유게시판</h2>
+        <div class="section-header2">
+            <a th:href="@{/board/FREE/new}" class="btn btn-write">글쓰기 ✍️</a>
+            <a th:href="@{/board/FREE}" class="btn btn-detail">더보기 ➕</a>
+        </div>
+      </div>
+      <div class="post-list">
+          <div class="post" th:each="post : ${freePosts}" th:onclick="|location.href='@{/board/FREE/{postId}(postId=${post.id})}'|">
+            <div class="post-title" th:text="${post.title}">제목</div>
+            <div class="post-meta" th:text="${post.createdBy} + ' | ' + ${#temporals.format(post.createTime, 'yyyy-MM-dd')}">작성자 | 2025-08-25</div>
+          </div>
+          <div class="post" th:if="${freePosts == null or #lists.isEmpty(freePosts)}">게시글이 없습니다.</div>
+      </div>
+    </section>
+
+    <!-- 가족 앨범 -->
+    <section class="board-section">
+      <div class="section-header">
+        <h2>📸 가족 앨범</h2>
+        <div class="section-header2">
+            <a th:href="@{/board/ALBUM/new}" class="btn btn-write">글쓰기 ✍️</a>
+            <a th:href="@{/board/ALBUM}" class="btn btn-detail">더보기 ➕</a>
+        </div>
+      </div>
+      <div class="post-list">
+          <div class="post" th:each="post : ${albumPosts}" th:onclick="|location.href='@{/board/ALBUM/{postId}(postId=${post.id})}'|">
+            <div class="post-title" th:text="${post.title}">제목</div>
+            <div class="post-meta" th:text="${post.createdBy} + ' | ' + ${#temporals.format(post.createTime, 'yyyy-MM-dd')}">작성자 | 2025-08-25</div>
+          </div>
+          <div class="post" th:if="${albumPosts == null or #lists.isEmpty(albumPosts)}">게시글이 없습니다.</div>
+      </div>
+    </section>
+
+    <!-- 이벤트 소식 -->
+    <section class="board-section">
+      <div class="section-header">
+        <h2>🎉 이벤트 소식</h2>
+        <div class="section-header2">
+            <button onclick="alert('띠용! 아직 준비중입니다!')" class="btn btn-write">글쓰기 ✍️</button>
+            <button onclick="alert('띠용! 아직 준비중입니다!')" class="btn btn-detail">더보기 ➕</button>
+        </div>
+      </div>
+      <div class="post-list">
+        <!-- 3개의 예시 이벤트 게시글 -->
+        <div class="post"><div class="post-title">우리 가족 생일 🎉</div><div class="post-meta">재준 | 2025-03-29</div></div>
+        <div class="post"><div class="post-title">행복 기념일</div><div class="post-meta">희정 | 2025-03-21</div></div>
+        <div class="post"><div class="post-title">아기 첫돌 기념 📷</div><div class="post-meta">승환 | 2025-03-18</div></div>
+      </div>
+    </section>
+  </main>
+</div>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+</th:block>
+
+<th:block layout:fragment="script">
+    <!-- ✅ 구글 reCAPTCHA JS -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script th:src="@{/js/index.js}" defer></script>
+</th:block>
+
+<div layout:fragment="content">
+  <main>
+    <section onclick="alert('로그인 후 이용해주세요!')" class="card">
+        <h2>📢 공지사항</h2>
+        <p>우리 가족 커뮤니티 운영에 관한 소식을 확인해보세요!</p>
+      </section>
+
+    <section onclick="alert('로그인 후 이용해주세요!')" class="card">
+      <h2>💬 자유게시판</h2>
+      <p>가족들과 나눈 따뜻한 이야기들을 확인해보세요!</p>
+    </section>
+
+    <section onclick="alert('로그인 후 이용해주세요!')" class="card">
+      <h2>📸 가족 앨범</h2>
+      <p>소중한 순간들을 함께 공유하는 공간입니다.</p>
+    </section>
+
+    <section onclick="alert('로그인 후 이용해주세요!')" class="card">
+      <h2>🎉 이벤트 소식</h2>
+      <p>다가오는 가족 모임과 기념일을 미리 알아보세요!</p>
+    </section>
+  </main>
+</div>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/edit.css}" />
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/edit.js}" defer></script>
+</th:block>
+
+<div layout:fragment="content">
+<main>
+  <!-- 글 수정 -->
+  <section class="board-section">
+    <div class="section-header">
+      <h2>
+          ✏️  {{ board_title }} 글 수정
+      </h2>
+    </div>
+    <!-- 수정용 폼 -->
+    <form action="{{ url_for('edit_post', board_name=board_name, post_id=post.id) }}" method="POST" enctype="multipart/form-data" class="write-form">
+      <!-- CSRF 보호 -->
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <!-- 제목 -->
+      <input type="text" name="title" value="{{ post.title }}" required style="width:100%; padding:10px; margin-bottom:10px;">
+
+      <!-- Toast UI Editor -->
+      <div id="editor">{{ post.content | safe }}</div>
+      <input type="hidden" name="content" id="contentHidden">
+
+      <!-- 파일 첨부 (수정 시 추가 가능) -->
+      <div class="margin-top">
+        <label>📎 추가 첨부파일 (선택):</label><br>
+        <input type="file" id="attachment" name="attachment" multiple>
+        <div id="file-warning" class="alert alert-warning" style="display: none;"></div>
+        <div id="file-list" class="margin-top"></div>
+      </div>
+
+      <div class="text-align-right write-container">
+        <a href="{{ url_for('view_post', board_name=board_name, post_id=post.id) }}" class="btn btn-list">돌아가기 🔙</a>
+        <button type="submit" class="btn btn-write">수정 완료 ✅</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+
+  <!-- 로딩 모달창 -->
+  <div id="uploadModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:20px 30px; border-radius:10px; width:300px; text-align:center;">
+      <h3 id="uploadStatus">동영상 업로드 중...</h3>
+      <div style="margin-top:15px; background:#eee; border-radius:5px; overflow:hidden; height:20px;">
+        <div id="uploadProgress" style="width:0%; height:100%; background:#4caf50;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

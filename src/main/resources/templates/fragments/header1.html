@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--/*@thymesVar id="memberFormDto" type="com.community.dto.MemberFormDto"*/-->
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            var errorMessage = [[${errorMessage}]];
+            if(errorMessage != null){
+                alert(errorMessage);
+            }
+        });
+    </script>
+
+</th:block>
+
+<div th:fragment="header">
+<header>
+    <a th:href="@{/}" class="text-decoration"><h1>우리 가족 커뮤니티 🌟</h1></a>
+    <div class="navbar-right">
+        <nav>
+            <a th:href="@{/}" style="color:rgb(255, 225, 0);">홈</a>
+            <a href="#" onclick="alert('로그인 후 이용해주세요!')">공지사항</a>
+            <a href="#" onclick="alert('로그인 후 이용해주세요!')">자유게시판</a>
+            <a href="#" onclick="alert('로그인 후 이용해주세요!')">가족 앨범</a>
+            <a href="#" onclick="alert('로그인 후 이용해주세요!')">이벤트 소식</a>
+        </nav>
+        <!-- PC 전용 로그인/회원가입 버튼 -->
+        <div class="header-actions pc-only">
+            <form th:action="@{/login}" method="get"><button class="btn btn-login">로그인</button></form>
+            <form th:action="@{/register}" method="get"><button class="btn btn-signup">회원가입</button></form>
+        </div>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+    </div>
+</header>
+
+<!-- 슬라이딩 메뉴 안에 로그인/회원가입 버튼 -->
+<nav class="side-nav" id="sideNav">
+    <div class="header-actions mobile-only">
+        <form th:action="@{/login}" method="get"><button class="btn btn-login">로그인</button></form>
+        <form th:action="@{/register}" method="get"><button class="btn btn-signup">회원가입</button></form>
+    </div>
+    <a th:href="@{/}" style="color:rgb(255, 225, 0);">홈 <<</a>
+    <a href="#" onclick="alert('로그인 후 이용해주세요!')">공지사항</a>
+    <a href="#" onclick="alert('로그인 후 이용해주세요!')">자유게시판</a>
+    <a href="#" onclick="alert('로그인 후 이용해주세요!')">가족 앨범</a>
+    <a href="#" onclick="alert('로그인 후 이용해주세요!')">이벤트 소식</a>
+</nav>
+
+<!-- 로그인 모달 -->
+<!--<div id="loginModal" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span class="close" onclick="closeModal('loginModal')">&times;</span>-->
+<!--        <h2>로그인</h2>-->
+<!--        <form id="login-form" action="/login" method="POST" class="modal-content2">-->
+<!--            <input type="text" id="userid2" name="userid" placeholder="아이디" autofocus required />-->
+<!--            <input type="password" id="password2" name="password" placeholder="비밀번호" required />-->
+<!--            <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>-->
+<!--            <input type="submit" id="login-btn" class="btn btn-login" value="로그인"></input>-->
+<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- 회원가입 모달 -->
+<!--<div id="signupModal" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span class="close" onclick="closeModal('signupModal')">&times;</span>-->
+<!--        <h2>회원가입</h2>-->
+<!--        <form id="register-form" action="/register" method="POST" class="modal-content2" th:object="${memberFormDto}">-->
+<!--            <input type="text" th:field="*{name}" placeholder="이름*" autofocus required />-->
+<!--            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>-->
+<!--            <div class="id-box">-->
+<!--                <input type="text" th:field="*{userId}" placeholder="아이디*" required />-->
+<!--                <button type="button" id="check-duplicate-btn" class="btn btn-check id-check-box">중복확인</button>-->
+<!--            </div>-->
+<!--            <p th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="fieldError">Incorrect data</p>-->
+<!--&lt;!&ndash;            <p id="userid-warning" class="id-check-comment">아이디 입력을 변경하면 다시 중복확인해야 합니다.</p>&ndash;&gt;-->
+<!--            <input type="password" th:field="*{password}" placeholder="비밀번호*" required />-->
+<!--            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>-->
+<!--            <input type="password" id="confirm-password" name="confirm-password" placeholder="비밀번호 확인*" required />-->
+<!--            <p id="password-warning" class="ps-check-comment">비밀번호가 일치하지 않습니다.</p>-->
+<!--            <input type="email" th:field="*{email}" placeholder="이메일*" required />-->
+<!--            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>-->
+<!--            <input th:field="*{birthday}" type="text" placeholder="생년월일 8자리 (예:19001010)" minlength="8" maxlength="8" />-->
+<!--            <label th:for="privacyAgree"><input type="checkbox" th:field="*{privacyAgree}" required /><a href="" id="openAgreement"><span class="font1">개인정보 수집 및 이용 동의</span></a></label>-->
+<!--            <p th:if="${#fields.hasErrors('privacyAgree')}" th:errors="*{privacyAgree}" class="fieldError">Incorrect data</p>-->
+<!--            <hr>-->
+<!--            <p style="font-size:0.7em">* 표시는 필수항목임</p>-->
+<!--            &lt;!&ndash; ✅ reCAPTCHA 표시 &ndash;&gt;-->
+<!--            <div class="g-recaptcha" data-sitekey="6LduRigrAAAAAEtuedIBLQRzQTRODwzYXE7jiJPg"></div>-->
+<!--            <input type="submit" class="btn btn-signup" id="register-btn" value="회원가입" disabled></input>-->
+<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- 개인정보 수집 및 이용 동의 모달 -->
+<!--<div id="agreementModal" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span class="close" onclick="closeModal('agreementModal')">&times;</span>-->
+<!--        <h2>개인정보 수집 및 이용 동의</h2>-->
+<!--        <div class="modal-content2 modal-content3">-->
+<!--            <ul>-->
+<!--                <li>"우리 가족 커뮤니티"는 회원가입, 게시판 이용 등을 위해 최소한의 개인정보를 수집합니다.</li>-->
+<!--            </ul>-->
+<!--            <br>-->
+<!--            <h4>1. 수집 항목</h4>-->
+<!--            <ul>-->
+<!--                <li>필수 항목: 이름, 아이디, 비밀번호, 이메일</li>-->
+<!--                <li>선택 항목: 생년월일</li>-->
+<!--            </ul>-->
+<!--            <br>-->
+<!--            <h4>2. 수집 목적</h4>-->
+<!--            <ul>-->
+<!--                <li>회원가입 및 서비스 이용에 따른 본인 확인</li>-->
+<!--                <li>게시판 기능 사용 및 공지사항 전달</li>-->
+<!--                <li>고객 문의 대응 및 민원 처리</li>-->
+<!--            </ul>-->
+<!--            <br>-->
+<!--            <h4>3. 보유 및 이용 기간</h4>-->
+<!--            <ul>-->
+<!--                <li>회원 탈퇴 시 즉시 파기</li>-->
+<!--                <li>단, 관계 법령에 따라 보존이 필요한 경우 해당 기간 동안 보관</li>-->
+<!--            </ul>-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <td>보관 항목</td>-->
+<!--                    <td>보존 사유</td>-->
+<!--                    <td>보존 근거</td>-->
+<!--                    <td>보존 기간</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>접속 로그</td>-->
+<!--                    <td>시스템 보안 및 오류 확인</td>-->
+<!--                    <td>통신비밀보호법</td>-->
+<!--                    <td>최대 3개월</td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--            <br>-->
+<!--            <h4>4. 동의를 거부할 권리 및 불이익</h4>-->
+<!--            <ul>-->
+<!--                <li>이용자는 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다.</li>-->
+<!--                <li>단, 필수 항목에 대한 동의를 거부할 경우 회원가입 및 서비스 이용이 제한될 수 있습니다.</li>-->
+<!--            </ul>-->
+<!--            <hr>-->
+<!--            <span>※ 본 동의서는 2025년 4월 18일부터 적용됩니다.</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</div>
+</html>

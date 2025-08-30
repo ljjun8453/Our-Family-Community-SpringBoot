@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="header">
+<header>
+    <a th:href="@{/home}" class="text-decoration"><h1>우리 가족 커뮤니티 🌟</h1></a>
+    <div class="navbar-right">
+        <nav>
+            <a th:href="@{/home}" style="color:rgb(255, 225, 0);">홈</a>
+            <a th:href="@{/board/NOTICE}">공지사항</a>
+            <a th:href="@{/board/FREE}">자유게시판</a>
+            <a th:href="@{/board/ALBUM}">가족 앨범</a>
+            <a onclick="alert('띠용! 아직 준비중입니다!')" href="#">이벤트 소식</a>
+        </nav>
+        <!-- PC 전용 로그인/회원가입 버튼 -->
+        <div class="header-actions pc-only">
+            <span class="font2" sec:authorize="isAuthenticated()" th:text="|${#authentication.name}님 환영합니다 🎉|">OOO님 환영합니다 🎉</span>
+            <div class="btn-align-01">
+                <a th:href="@{/mypage}" class="btn-box-mypage btn-mypage">마이페이지</a>
+                <form th:action="@{/logout}" method="POST">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <input type="submit" class="btn btn-signup btn-logout-pd" value="로그아웃" />
+                </form>
+            </div>
+        </div>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+    </div>
+</header>
+
+<!-- 슬라이딩 메뉴 안에 로그인/회원가입 버튼 -->
+<nav class="side-nav" id="sideNav">
+    <div class="header-actions mobile-only">
+        <span class="font2" sec:authorize="isAuthenticated()" th:text="|${#authentication.name}님 환영합니다 🎉|">OOO님<br> 환영합니다 🎉</span>
+        <a th:href="@{/mypage}" class="btn-box-mypage btn-mypage">마이페이지</a>
+        <form th:action="@{/logout}" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="submit" class="btn btn-signup btn-logout-pd" value="로그아웃"></input>
+        </form>
+    </div>
+    <a th:href="@{/home}" style="color:rgb(255, 225, 0);">홈 <<</a>
+    <a th:href="@{/board/NOTICE}">공지사항</a>
+    <a th:href="@{/board/FREE}">자유게시판</a>
+    <a th:href="@{/board/ALBUM}">가족 앨범</a>
+    <a onclick="alert('띠용! 아직 준비중입니다!')" href="#">이벤트 소식</a>
+</nav>
+
+<!-- 로그인 모달 -->
+<!--<div id="loginModal" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span class="close" onclick="closeModal('loginModal')">&times;</span>-->
+<!--        <h2>로그인</h2>-->
+<!--        <form id="login" action="/login" method="post" class="modal-content2">-->
+<!--            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">-->
+<!--            <input type="text" name="userid" placeholder="아이디" autofocus required />-->
+<!--            <input type="password" name="password" placeholder="비밀번호" required />-->
+<!--            <input type="submit" class="btn btn-login" value="로그인"></input>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- 회원가입 모달 -->
+<!--<div id="signupModal" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span class="close" onclick="closeModal('signupModal')">&times;</span>-->
+<!--        <h2>회원가입</h2>-->
+<!--        <form id="register" action="/register" method="post" class="modal-content2">-->
+<!--            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">-->
+<!--            <input type="text" name="name" placeholder="이름" autofocus required />-->
+<!--            <div class="id-box">-->
+<!--                <input type="text" name="userid" placeholder="아이디" required />-->
+<!--                <button class="btn btn-check id-check-box">중복확인</button>-->
+<!--            </div>-->
+<!--            <input type="password" name="password" placeholder="비밀번호" required />-->
+<!--            <input type="password" name="password2" placeholder="비밀번호 확인" required />-->
+<!--            <input type="email" name="email" placeholder="이메일" required />-->
+<!--            <input id="birthday" type="text" name="birthdate" placeholder="생년월일 8자리 (예:19001010)" minlength="8" maxlength="8" />-->
+<!--            <label for="private"><input type="checkbox" name="privacy_agree" id="private" required /> <a href="#" id="openAgreement"><span class="font1">개인정보 수집 및 이용 동의</span></a></label>-->
+<!--            <input type="submit" class="btn btn-signup" value="회원가입"></input>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- 개인정보 수집 및 이용 동의 모달 -->
+<!--<div id="agreementModal" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span class="close" onclick="closeModal('agreementModal')">&times;</span>-->
+<!--        <h2>개인정보 수집 및 이용 동의</h2>-->
+<!--        <div class="modal-content2 modal-content3">-->
+<!--            <ul>-->
+<!--                <li>"우리 가족 커뮤니티"는 회원가입, 게시판 이용 등을 위해 최소한의 개인정보를 수집합니다.</li>-->
+<!--            </ul>-->
+<!--            <br>-->
+<!--            <h4>1. 수집 항목</h4>-->
+<!--            <ul>-->
+<!--                <li>필수 항목: 이름, 아이디, 비밀번호, 이메일</li>-->
+<!--                <li>선택 항목: 생년월일</li>-->
+<!--            </ul>-->
+<!--            <br>-->
+<!--            <h4>2. 수집 목적</h4>-->
+<!--            <ul>-->
+<!--                <li>회원가입 및 서비스 이용에 따른 본인 확인</li>-->
+<!--                <li>게시판 기능 사용 및 공지사항 전달</li>-->
+<!--                <li>고객 문의 대응 및 민원 처리</li>-->
+<!--            </ul>-->
+<!--            <br>-->
+<!--            <h4>3. 보유 및 이용 기간</h4>-->
+<!--            <ul>-->
+<!--                <li>회원 탈퇴 시 즉시 파기</li>-->
+<!--                <li>단, 관계 법령에 따라 보존이 필요한 경우 해당 기간 동안 보관</li>-->
+<!--            </ul>-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <td>보관 항목</td>-->
+<!--                    <td>보존 사유</td>-->
+<!--                    <td>보존 근거</td>-->
+<!--                    <td>보존 기간</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>접속 로그</td>-->
+<!--                    <td>시스템 보안 및 오류 확인</td>-->
+<!--                    <td>통신비밀보호법</td>-->
+<!--                    <td>최대 3개월</td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--            <br>-->
+<!--            <h4>4. 동의를 거부할 권리 및 불이익</h4>-->
+<!--            <ul>-->
+<!--                <li>이용자는 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다.</li>-->
+<!--                <li>단, 필수 항목에 대한 동의를 거부할 경우 회원가입 및 서비스 이용이 제한될 수 있습니다.</li>-->
+<!--            </ul>-->
+<!--            <hr>-->
+<!--            <span>※ 본 동의서는 2025년 4월 18일부터 적용됩니다.</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</div>
+</html>

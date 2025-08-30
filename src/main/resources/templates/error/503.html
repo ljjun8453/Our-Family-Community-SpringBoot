@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>서비스 점검 중</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      margin: 0;
+      font-family: 'Pretendard', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1s ease-out;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .spinner {
+      margin: 30px auto;
+      width: 50px;
+      height: 50px;
+      border: 6px solid #fff;
+      border-top: 6px solid #6a11cb;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>시스템 점검 중</h1>
+    <h1>🛠</h1>
+    <h2>⏳ 잠시만 기다려주세요!</h2>
+    <div class="spinner"></div>
+    <p>
+      현재 <strong>"우리 가족 커뮤니티"</strong>는<br>
+      더 나은 서비스를 위한 점검 중입니다.<br><br>
+      최대한 빠르게 복구될 수 있도록 노력하겠습니다.
+    </p>
+    <footer>문의: <a href="mailto:ljj3296@jaejun.net" style="color:#fff;text-decoration:underline;">ljj3296@jaejun.net</a></footer>
+  </div>
+</body>
+</html>
