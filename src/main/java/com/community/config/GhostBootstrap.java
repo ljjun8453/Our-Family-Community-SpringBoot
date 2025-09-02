@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Component
-@PropertySource(value = "classpath:application-password.properties", encoding = "UTF-8")
+@PropertySource(value = "classpath:application-prod.properties", encoding = "UTF-8")
 @RequiredArgsConstructor
 public class GhostBootstrap implements ApplicationRunner {
 
