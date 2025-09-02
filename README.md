@@ -3,6 +3,8 @@
 - Spring Boot 3.5.5, Spring Security 6, MySQL 8.4, Ubuntu Server 24.04 LTS, Nginx, Thymeleaf 사용
 - 기존 Flask로 구현한 것을 Spring Boot와 Spring Security를 이용하여 다시 구현
 
+---
+
 ## 🚀 Deployment & Infrastructure
 
 - **OS**: Ubuntu Server 24.04 LTS
